@@ -26,7 +26,7 @@ Provides nice configuration layer, secured capture controller, storages and lots
 If you're upgrading from an earlier version to version 2, please see our [migration guide](docs/upgrade_to_2.0.md).
 
 ## Quick Start
-If you want to quickly get started, please see [get it started](docs/get-it-started).
+If you want to quickly get started, please see [get it started](docs/get-it-started.md).
 
 ## Resources
 
