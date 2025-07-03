@@ -10,7 +10,7 @@ class RefundController extends PayumController
     public function doAction($payum_token)
     {
         /** @var Request $request */
-        $request = \App::make('request');
+        $request = app('request');
         $request->attributes->set('payum_token', $payum_token);
 
         $token = $this->getPayum()->getHttpRequestVerifier()->verify($request);
@@ -26,10 +26,9 @@ class RefundController extends PayumController
         $this->getPayum()->getHttpRequestVerifier()->invalidate($token);
 
         if($token->getAfterUrl()){
-            return \Redirect::to($token->getAfterUrl());
+            return redirect($token->getAfterUrl());
         }
 
-        return \Response::make(null, 204);
-
+        return response(null, 204);
     }
 }

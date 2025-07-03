@@ -23,11 +23,11 @@ class Token extends Model implements TokenInterface
     public $incrementing = false;
 
     /**
-     * @var bool
+     * @var array
      */
-    protected static $unguarded = true;
+    protected $guarded = [];
 
-    public function __construct(array $attributes = array())
+    public function __construct(array $attributes = [])
     {
         if (empty($attributes['hash'])) {
             $attributes['hash'] = Random::generateToken();

@@ -9,28 +9,30 @@ Described in [Get it started](get-it-started.md)
 * Configuration
 
 ```bash
-$ php composer.phar require payum/payum-laravel-package payum/offline
+composer require payum/payum-laravel-package payum/offline
 ```
 
 ```php
-// bootstrap/start.php
+// app/Providers/AppServiceProvider.php
 
-App::resolving('payum.builder', function(\Payum\Core\PayumBuilder $payumBuilder) {
-    $payumBuilder
-        ->addGateway('offline', ['factory' => 'offline'])
-    ;
-});
+public function register()
+{
+    $this->app->resolving('payum.builder', function(\Payum\Core\PayumBuilder $payumBuilder) {
+        $payumBuilder
+            ->addGateway('offline', ['factory' => 'offline']);
+    });
+}
 ```
 
 * Prepare payment
 
 ```php
 <?php
-// app/controllers/PaymentController.php
+// app/Http/Controllers/PaymentController.php
 
 use Payum\LaravelPackage\Controller\PayumController;
 
-cclass PaymentController extends PayumController
+class PaymentController extends PayumController
 {
  	public function preparePayment()
  	{
@@ -43,16 +45,16 @@ cclass PaymentController extends PayumController
          $payment->setDescription('A description');
          $payment->setClientId('anId');
          $payment->setClientEmail('foo@example.com');
-         $payment->setDetails(array(
+         $payment->setDetails([
            // put here any fields in a gateway format.
            // for example if you use Paypal ExpressCheckout you can define a description of the first item:
            // 'L_PAYMENTREQUEST_0_DESC0' => 'A desc',
-         ));
+         ]);
          $storage->update($payment);
 
-         $captureToken = $payum->getTokenFactory()->createCaptureToken('offline', $payment, 'payment_done');
+         $captureToken = $this->getPayum()->getTokenFactory()->createCaptureToken('offline', $payment, 'payment_done');
 
-         return \Redirect::to($captureToken->getTargetUrl());
+         return redirect($captureToken->getTargetUrl());
  	}
 }
 ```
@@ -62,32 +64,34 @@ cclass PaymentController extends PayumController
 * Configuration
 
 ```bash
-$ php composer.phar require payum/payum-laravel-package stripe/stripe-php payum/stripe
+composer require payum/payum-laravel-package stripe/stripe-php payum/stripe
 ```
 
 ```php
-// bootstrap/start.php
+// app/Providers/AppServiceProvider.php
 
-App::resolving('payum.builder', function(\Payum\Core\PayumBuilder $payumBuilder) {
-    $payumBuilder
-        ->addGateway('stripe_js', [
-            'factory' => 'stripe_js',
-            'publishable_key' => 'EDIT ME',
-            'secret_key' => 'EDIT ME',
-         ])
-    ;
-});
+public function register()
+{
+    $this->app->resolving('payum.builder', function(\Payum\Core\PayumBuilder $payumBuilder) {
+        $payumBuilder
+            ->addGateway('stripe_js', [
+                'factory' => 'stripe_js',
+                'publishable_key' => 'EDIT ME',
+                'secret_key' => 'EDIT ME',
+             ]);
+    });
+}
 ```
 
 * Prepare payment
 
 ```php
 <?php
-// app/controllers/StripeController.php
+// app/Http/Controllers/StripeController.php
 
 use Payum\LaravelPackage\Controller\PayumController;
 
-cclass StripeController extends PayumController
+class StripeController extends PayumController
 {
  	public function prepareJs()
  	{
@@ -101,7 +105,7 @@ cclass StripeController extends PayumController
  
          $captureToken = $this->getPayum()->getTokenFactory()->createCaptureToken('stripe_js', $details, 'payment_done');
  
-         return \Redirect::to($captureToken->getTargetUrl());
+         return redirect($captureToken->getTargetUrl());
  	}
 }
 ```
@@ -111,32 +115,34 @@ cclass StripeController extends PayumController
 * Configuration
 
 ```bash
-$ php composer.phar require payum/stripe payum/payum-laravel-package stripe/stripe-php
+composer require payum/stripe payum/payum-laravel-package stripe/stripe-php
 ```
 
 ```php
-// bootstrap/start.php
+// app/Providers/AppServiceProvider.php
 
-App::resolving('payum.builder', function(\Payum\Core\PayumBuilder $payumBuilder) {
-    $payumBuilder
-        ->addGateway('stripe_checkout', [
-            'factory' => 'stripe_checkout',
-            'publishable_key' => 'EDIT ME',
-            'secret_key' => 'EDIT ME',
-         ])
-    ;
-});
+public function register()
+{
+    $this->app->resolving('payum.builder', function(\Payum\Core\PayumBuilder $payumBuilder) {
+        $payumBuilder
+            ->addGateway('stripe_checkout', [
+                'factory' => 'stripe_checkout',
+                'publishable_key' => 'EDIT ME',
+                'secret_key' => 'EDIT ME',
+             ]);
+    });
+}
 ```
 
 * Prepare payment
 
 ```php
 <?php
-// app/controllers/StripeController.php
+// app/Http/Controllers/StripeController.php
 
 use Payum\LaravelPackage\Controller\PayumController;
 
-cclass StripeController extends PayumController
+class StripeController extends PayumController
 {
  	public function prepareCheckout()
  	{
@@ -150,7 +156,7 @@ cclass StripeController extends PayumController
  
          $captureToken = $this->getPayum()->getTokenFactory()->createCaptureToken('stripe_checkout', $details, 'payment_done');
  
-         return \Redirect::to($captureToken->getTargetUrl());
+         return redirect($captureToken->getTargetUrl());
  	}
 }
 ```
@@ -160,35 +166,37 @@ cclass StripeController extends PayumController
 * Configuration
 
 ```bash
-$ php composer.phar require payum/omnipay-bridge payum/payum-laravel-package omnipay/stripe
+composer require payum/omnipay-bridge payum/payum-laravel-package omnipay/stripe
 ```
 
 ```php
-// bootstrap/start.php
+// app/Providers/AppServiceProvider.php
 
-App::resolving('payum.builder', function(\Payum\Core\PayumBuilder $payumBuilder) {
-    $payumBuilder
-        ->addGateway('stripe_direct', [
-            'factory' => 'omnipay_direct',
-            'type' => 'Stripe',
-            'options' => array(
-                'apiKey' => 'EDIT ME',
-                'testMode' => true,
-            ),
-         ])
-    ;
-});
+public function register()
+{
+    $this->app->resolving('payum.builder', function(\Payum\Core\PayumBuilder $payumBuilder) {
+        $payumBuilder
+            ->addGateway('stripe_direct', [
+                'factory' => 'omnipay_direct',
+                'type' => 'Stripe',
+                'options' => [
+                    'apiKey' => 'EDIT ME',
+                    'testMode' => true,
+                ],
+             ]);
+    });
+}
 ```
 
 * Prepare payment
 
 ```php
 <?php
-// app/controllers/OmnipayController.php
+// app/Http/Controllers/OmnipayController.php
 
 use Payum\LaravelPackage\Controller\PayumController;
 
-cclass OmnipayController extends PayumController
+class OmnipayController extends PayumController
 {
  	public function prepareDirect()
  	{
@@ -201,7 +209,7 @@ cclass OmnipayController extends PayumController
  
          $captureToken = $this->getPayum()->getTokenFactory()->createCaptureToken('stripe_direct', $details, 'payment_done');
  
-         return \Redirect::to($captureToken->getTargetUrl());
+         return redirect($captureToken->getTargetUrl());
  	}
 }
 ```

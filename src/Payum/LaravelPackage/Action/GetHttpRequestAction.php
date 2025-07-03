@@ -10,7 +10,7 @@ class GetHttpRequestAction extends SymfonyGetHttpRequestAction
      */
     public function execute($request)
     {
-        $this->setHttpRequest(\App::make('request'));
+        $this->setHttpRequest(app('request'));
 
         parent::execute($request);
     }

@@ -22,16 +22,18 @@ Schema::create('payum_gateway_configs', function($table) {
 The gateway config storage should be registered like this:
 
 ```php
-// bootstrap/start.php
+// app/Providers/AppServiceProvider.php
 
 use Payum\LaravelPackage\Storage\EloquentStorage;
 use Payum\LaravelPackage\Model\GatewayConfig;
 
-App::resolving('payum.builder', function(\Payum\Core\PayumBuilder $payumBuilder) {
-    $payumBuilder
-        ->setGatewayConfigStorage(new EloquentStorage(GatewayConfig::class))
-    ;
-});
+public function register()
+{
+    $this->app->resolving('payum.builder', function(\Payum\Core\PayumBuilder $payumBuilder) {
+        $payumBuilder
+            ->setGatewayConfigStorage(new EloquentStorage(GatewayConfig::class));
+    });
+}
 ```
 
 Back to [index](index.md).

@@ -14,7 +14,7 @@ abstract class PayumController extends Controller
      */
     protected function getPayum()
     {
-        return \App::make('payum');
+        return app('payum');
     }
 
     /**
@@ -25,7 +25,7 @@ abstract class PayumController extends Controller
     protected function convertReply(ReplyInterface $reply)
     {
         /** @var ReplyToSymfonyResponseConverter $converter */
-        $converter = \App::make('payum.converter.reply_to_http_response');
+        $converter = app('payum.converter.reply_to_http_response');
 
         return $converter->convert($reply);
     }

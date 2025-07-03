@@ -16,7 +16,7 @@ class PaymentController extends PayumController
     public function done($payum_token)
     {
         /** @var Request $request */
-        $request = \App::make('request');
+        $request = app('request');
         $request->attributes->set('payum_token', $payum_token);
 
         $token = $this->getPayum()->getHttpRequestVerifier()->verify($request);
@@ -24,10 +24,10 @@ class PaymentController extends PayumController
 
         $gateway->execute($status = new GetHumanStatus($token));
 
-        return \Response::json(array(
+        return response()->json([
             'status' => $status->getValue(),
             'details' => iterator_to_array($status->getFirstModel())
-        ));
+        ]);
     }
 }
 ```

@@ -24,6 +24,6 @@ class ContainerAwareRegistry extends AbstractRegistry
      */
     protected function getService($id)
     {
-        return is_object($id) ? $id : $this->container[$id];
+        return is_object($id) ? $id : $this->container->make($id);
     }
 }

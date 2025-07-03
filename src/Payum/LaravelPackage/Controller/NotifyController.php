@@ -13,7 +13,7 @@ class NotifyController extends PayumController
 
         $gateway->execute(new Notify(null));
 
-        return \Response::make(null, 204);
+        return response(null, 204);
     }
 
     public function doAction($payumToken)
@@ -32,6 +32,6 @@ class NotifyController extends PayumController
            return $this->convertReply($reply);
         }
 
-        return \Response::make(null, 204);
+        return response(null, 204);
     }
 }

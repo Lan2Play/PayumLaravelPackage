@@ -15,21 +15,10 @@ use Payum\LaravelPackage\Security\TokenFactory;
 class PayumServiceProvider extends ServiceProvider
 {
     /**
-     * Version Specific provider
-     */
-    protected $provider;
-
-    /**
      * {@inheritDoc}
      */
     public function boot()
     {
-        if (version_compare(Application::VERSION, '5.0', '<')) {
-            $srcDir = realpath(__DIR__ . '/../../');
-
-            $this->package('payum/payum-laravel-package', 'payum-laravel-package', $srcDir);
-        }
-
         $this->defineRoutes();
     }
 
@@ -64,9 +53,9 @@ class PayumServiceProvider extends ServiceProvider
                 ->setHttpRequestVerifier(function(StorageInterface $tokenStorage) {
                     return new HttpRequestVerifier($tokenStorage);
                 })
-                ->setCoreGatewayFactory(function(array $defaultConfig) {
+                ->setCoreGatewayFactory(function(array $defaultConfig) use ($app) {
                     $factory = new CoreGatewayFactory($defaultConfig);
-                    $factory->setContainer($this->app);
+                    $factory->setContainer($app);
 
                     return $factory;
                 })
@@ -109,29 +98,29 @@ class PayumServiceProvider extends ServiceProvider
     {
         $route = $this->app->make('router');
 
-        $route->any('/payment/authorize/{payum_token}', array(
+        $route->any('/payment/authorize/{payum_token}', [
             'as' => 'payum_authorize_do',
             'uses' => 'Payum\LaravelPackage\Controller\AuthorizeController@doAction'
-        ));
+        ]);
 
-        $route->any('/payment/capture/{payum_token}', array(
+        $route->any('/payment/capture/{payum_token}', [
             'as' => 'payum_capture_do',
             'uses' => 'Payum\LaravelPackage\Controller\CaptureController@doAction'
-        ));
+        ]);
 
-        $route->any('/payment/refund/{payum_token}', array(
+        $route->any('/payment/refund/{payum_token}', [
             'as' => 'payum_refund_do',
             'uses' => 'Payum\LaravelPackage\Controller\RefundController@doAction'
-        ));
+        ]);
 
-        $route->any('/payment/notify/{payum_token}', array(
+        $route->any('/payment/notify/{payum_token}', [
             'as' => 'payum_notify_do',
             'uses' => 'Payum\LaravelPackage\Controller\NotifyController@doAction'
-        ));
+        ]);
 
-        $route->any('/payment/notify/unsafe/{gateway_name}', array(
+        $route->any('/payment/notify/unsafe/{gateway_name}', [
             'as' => 'payum_notify_do_unsafe',
             'uses' => 'Payum\LaravelPackage\Controller\NotifyController@doUnsafeAction'
-        ));
+        ]);
     }
 }

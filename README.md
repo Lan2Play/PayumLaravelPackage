@@ -7,13 +7,26 @@ Payum is an MIT-licensed open source project with its ongoing development made p
 
 ---
 
-# Payum Laravel Bundle
+# Payum Laravel Package
 
 [![Join the chat at https://gitter.im/Payum/Payum](https://badges.gitter.im/Payum/Payum.svg)](https://gitter.im/Payum/Payum?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-The extension integrates [payum](http://payum.forma-dev.com/documentation#Payum) into [laravel](http://laravel.com/) framework.
-It already  supports [+35 gateways](https://github.com/Payum/Core/blob/master/Resources/docs/supported-gateways.md).
-Provide nice configuration layer, secured capture controller, storages and lots of other features.
+The extension integrates [payum](https://payum.forma-pro.com/) into [Laravel](https://laravel.com/) framework.
+It supports [35+ payment gateways](https://github.com/Payum/Core/blob/master/Resources/docs/supported-gateways.md).
+Provides nice configuration layer, secured capture controller, storages and lots of other features.
+
+## Requirements
+
+- PHP 8.2+
+- Laravel 12.0+
+- Payum Core 1.7+
+
+## Migrating from Laravel 4-8 / Version 1.x to Version 2.0
+
+If you're upgrading from an earlier version to version 2, please see our [migration guide](docs/upgrade_to_2.0.md).
+
+## Quick Start
+If you want to quickly get started, please see [get it started](docs/get-it-started).
 
 ## Resources
 

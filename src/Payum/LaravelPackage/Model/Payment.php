@@ -19,7 +19,7 @@ class Payment extends Model implements  PaymentInterface
      */
     public function setDetails($details)
     {
-        $this->setAttribute('details', json_encode($details ?: array(), JSON_PRESERVE_ZERO_FRACTION));
+        $this->setAttribute('details', json_encode($details ?: [], JSON_PRESERVE_ZERO_FRACTION));
     }
 
     /**
@@ -67,7 +67,7 @@ class Payment extends Model implements  PaymentInterface
      */
     public function getClientEmail()
     {
-        // TODO: Implement getClientEmail() method.
+        return $this->getAttribute('clientEmail');
     }
 
     /**

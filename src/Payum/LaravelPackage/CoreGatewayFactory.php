@@ -29,7 +29,7 @@ class CoreGatewayFactory extends BaseCoreGatewayFactory
     {
         foreach ($config as $name => $value) {
             if (0 === strpos($name, 'payum.action') && false == is_object($config[$name])) {
-                $config[$name] = $this->container[$config[$name]];
+                $config[$name] = $this->container->make($config[$name]);
             }
         }
 
@@ -44,7 +44,7 @@ class CoreGatewayFactory extends BaseCoreGatewayFactory
     {
         foreach ($config as $name => $value) {
             if (0 === strpos($name, 'payum.api') && false == is_object($config[$name])) {
-                $config[$name] = $this->container[$config[$name]];
+                $config[$name] = $this->container->make($config[$name]);
             }
         }
 
@@ -59,7 +59,7 @@ class CoreGatewayFactory extends BaseCoreGatewayFactory
     {
         foreach ($config as $name => $value) {
             if (0 === strpos($name, 'payum.extension') && false == is_object($config[$name])) {
-                $config[$name] = $this->container[$config[$name]];
+                $config[$name] = $this->container->make($config[$name]);
             }
         }
 

@@ -21,12 +21,12 @@ class ObtainCreditCardAction implements ActionInterface
             throw RequestNotSupportedException::createActionNotSupported($this, $request);
         }
 
-        if (\Request::isMethod('POST')) {
+        if (request()->isMethod('POST')) {
             $creditCard = new CreditCard;
-            $creditCard->setHolder(\Input::get('card_holder'));
-            $creditCard->setNumber(\Input::get('card_number'));
-            $creditCard->setSecurityCode(\Input::get('card_cvv'));
-            $creditCard->setExpireAt(new \DateTime(\Input::get('card_expire_at')));
+            $creditCard->setHolder(request()->input('card_holder'));
+            $creditCard->setNumber(request()->input('card_number'));
+            $creditCard->setSecurityCode(request()->input('card_cvv'));
+            $creditCard->setExpireAt(new \DateTime(request()->input('card_expire_at')));
 
             $request->set($creditCard);
 

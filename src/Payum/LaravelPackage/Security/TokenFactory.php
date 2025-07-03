@@ -8,8 +8,8 @@ class TokenFactory extends AbstractTokenFactory
     /**
      * {@inheritDoc}
      */
-    protected function generateUrl($path, array $parameters = array())
+    protected function generateUrl($path, array $parameters = [])
     {
-        return \URL::route($path, $parameters);
+        return route($path, $parameters);
     }
 }

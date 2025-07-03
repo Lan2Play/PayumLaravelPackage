@@ -1,6 +1,6 @@
 # Eloquent Storage
 
-Here we show how to store data in database using [Eloquent ORM](http://laravel.com/docs/4.2/eloquent).
+Here we show how to store data in database using [Eloquent ORM](https://laravel.com/docs/eloquent).
 
 ## Usage
 
@@ -17,15 +17,17 @@ class Payment extends Illuminate\Database\Eloquent\Model
 Register a storage for it 
 
 ```php
-// bootstrap/start.php
+// app/Providers/AppServiceProvider.php
 
 use Payum\LaravelPackage\Storage\EloquentStorage;
 
-App::resolving('payum.builder', function(\Payum\Core\PayumBuilder $payumBuilder) {
-    $payumBuilder
-        ->addStorage(Payment::class, new EloquentStorage(Payment::class))
-    ;
-});
+public function register()
+{
+    $this->app->resolving('payum.builder', function(\Payum\Core\PayumBuilder $payumBuilder) {
+        $payumBuilder
+            ->addStorage(Payment::class, new EloquentStorage(Payment::class));
+    });
+}
 ```
 
 ## Models 
@@ -57,16 +59,18 @@ The database schema could be generated like this
 The storage could be registered like this
 
 ```php
-// bootstrap/start.php
+// app/Providers/AppServiceProvider.php
 
 use Payum\LaravelPackage\Storage\EloquentStorage;
 use Payum\LaravelPackage\Model\Payment;
 
-App::resolving('payum.builder', function(\Payum\Core\PayumBuilder $payumBuilder) {
-    $payumBuilder
-        ->addStorage(Payment::class, new EloquentStorage(Payment::class))
-    ;
-});
+public function register()
+{
+    $this->app->resolving('payum.builder', function(\Payum\Core\PayumBuilder $payumBuilder) {
+        $payumBuilder
+            ->addStorage(Payment::class, new EloquentStorage(Payment::class));
+    });
+}
 ```
 
 
@@ -91,16 +95,18 @@ The database schema could be generated like this
 The token storage could be registered like this
 
 ```php
-// bootstrap/start.php
+// app/Providers/AppServiceProvider.php
 
 use Payum\LaravelPackage\Storage\EloquentStorage;
 use Payum\LaravelPackage\Model\Token;
 
-App::resolving('payum.builder', function(\Payum\Core\PayumBuilder $payumBuilder) {
-    $payumBuilder
-        ->setTokenStorage(new EloquentStorage(Token::class))
-    ;
-});
+public function register()
+{
+    $this->app->resolving('payum.builder', function(\Payum\Core\PayumBuilder $payumBuilder) {
+        $payumBuilder
+            ->setTokenStorage(new EloquentStorage(Token::class));
+    });
+}
 ```
 
 Back to [index](index.md).

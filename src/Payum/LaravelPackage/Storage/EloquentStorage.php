@@ -53,23 +53,18 @@ class EloquentStorage extends AbstractStorage
     /**
      * {@inheritDoc}
      *
-     * @return Model|null
+     * @return Model[]
      */
     public function findBy(array $criteria)
     {
-        if (false == $criteria) {
+        if (empty($criteria)) {
             return [];
         }
 
         $modelClass = $this->modelClass;
 
-        /** @var Builder $query */
-        $query = null;
+        $query = $modelClass::query();
         foreach ($criteria as $name => $value) {
-            if (false == $query) {
-                $query = $modelClass::where($name, '=', $value);
-            }
-
             $query->where($name, '=', $value);
         }
 
